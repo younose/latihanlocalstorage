@@ -1,0 +1,96 @@
+<html>
+  <head>
+    <title>To-Do List</title>
+    <style>
+      /* Add your CSS styles here */
+      /* Example styles */
+      body {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      .container {
+        width: 500px;
+        margin: 0 auto;
+        background-color: aqua;
+        padding: 30px;
+        height: 100vh;
+      }
+      h1 {
+        text-align: center;
+      }
+      .input-group {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 20px;
+      }
+      input[type="text"] {
+        width: 60%;
+        padding: 10px;
+        font-size: 16px;
+        margin-right: 20px;
+      }
+      button {
+        padding: 10px 20px;
+        font-size: 16px;
+        background-color: dodgerblue;
+        color: white;
+        border: none;
+        cursor: pointer;
+      }
+      ul {
+        list-style: none;
+        padding: 0;
+        margin: 20px 0;
+      }
+      li {
+        background-color: lightgray;
+        padding: 10px;
+        margin-bottom: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>To-Do List</h1>
+      <div class="input-group">
+        <input type="text" id="todo-input" placeholder="Add a to-do item" />
+        <button id="add-todo">Add</button>
+      </div>
+      <ul id="todo-list">
+        <!-- To-Do items will be added here dynamically -->
+      </ul>
+    </div>
+    <!-- Add your JavaScript code here -->
+    <script>
+      const todoInput = document.querySelector("#todo-input");
+      const addTodoBtn = document.querySelector("#add-todo");
+      const todoList = document.querySelector("#todo-list");
+
+      // Get to-do items from local storage if any
+      let todoItems = localStorage.getItem("todoItems")
+        ? JSON.parse(localStorage.getItem("todoItems"))
+        : [];
+
+      // Render to-do items on page load
+      todoItems.forEach((item) => {
+        const todoItem = document.createElement("li");
+        todoItem.innerText = item;
+        todoList.appendChild(todoItem);
+      });
+
+      // Add a to-do item
+      addTodoBtn.addEventListener("click", function () {
+        const todoItem = document.createElement("li");
+        todoItem.innerText = todoInput.value;
+        todoList.appendChild(todoItem);
+        todoInput.value = "";
+
+        // Add to-do item to local storage
+        todoItems.push(todoItem.innerText);
+        localStorage.setItem("todoItems", JSON.stringify(todoItems));
+      });
+    </script>
+  </body>
+</html>
